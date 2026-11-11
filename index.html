@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<title>Стекло-антишпион 360°</title>
+<style>
+:root{
+  --bg:#0b0b0d; --bg2:#141417; --card:#18181c; --line:#2a2a30;
+  --text:#f5f5f7; --muted:#a1a1a8; --accent:#4da3ff; --accent-bg:rgba(77,163,255,.12);
+  --good:#30d158; --good-bg:rgba(48,209,88,.12); --bad:#ff6b5e; --bad-bg:rgba(255,107,94,.12);
+  --warn:#ffcc4d; --warn-bg:rgba(255,204,77,.12);
+  --radius:22px; --shadow:0 10px 40px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f5f5f7; --bg2:#ffffff; --card:#ffffff; --line:#e3e3e8;
+    --text:#1d1d1f; --muted:#6e6e73; --accent:#0071e3; --accent-bg:rgba(0,113,227,.08);
+    --good:#1a8a3a; --good-bg:rgba(26,138,58,.09); --bad:#c9372c; --bad-bg:rgba(201,55,44,.08);
+    --warn:#9a6b00; --warn-bg:rgba(255,184,0,.14);
+    --shadow:0 10px 30px rgba(0,0,0,.07);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header.hero{padding:64px 0 28px;text-align:center}
+.eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-bg);padding:6px 12px;border-radius:999px}
+h1{font-size:clamp(34px,6vw,56px);line-height:1.05;letter-spacing:-.025em;margin:18px 0 14px;font-weight:700}
+.lead{color:var(--muted);font-size:clamp(17px,2.2vw,20px);max-width:720px;margin:0 auto}
+h2{font-size:clamp(26px,4vw,36px);letter-spacing:-.02em;line-height:1.15;margin:0 0 18px}
+section{padding:28px 0}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.reveal{animation:fadeInUp .55s ease-out both}
+.reveal.d1{animation-delay:.08s}.reveal.d2{animation-delay:.16s}.reveal.d3{animation-delay:.24s}
+@media (prefers-reduced-motion: reduce){.reveal{animation:none;opacity:1;transform:none}}
+
+.note{background:var(--warn-bg);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);border-radius:16px;padding:16px 18px;font-size:16px}
+.note b{color:var(--warn)}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.badge-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.badge{font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--accent-bg);color:var(--accent)}
+.badge.green{background:var(--good-bg);color:var(--good)}
+.badge.warn{background:var(--warn-bg);color:var(--warn)}
+
+.gallery{background:#fff;position:relative}
+.main-img{display:block;width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;cursor:zoom-in;border:0;padding:0}
+.main-img img{width:100%;height:100%;object-fit:contain;display:block}
+.thumbs{display:flex;gap:8px;padding:10px 12px;background:var(--bg2);border-bottom:1px solid var(--line);overflow-x:auto}
+.thumb{flex:0 0 64px;height:64px;border-radius:12px;border:2px solid transparent;background:#fff;padding:0;cursor:pointer;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:contain;display:block}
+.thumb[aria-current="true"]{border-color:var(--accent)}
+.thumb:focus-visible,.btn:focus-visible,.main-img:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.zoom-hint{position:absolute;right:12px;bottom:12px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:5px 9px;border-radius:999px;pointer-events:none}
+
+.body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:14px;flex:1}
+.body h3{font-size:24px;letter-spacing:-.015em;margin:0;line-height:1.2}
+.sub{color:var(--muted);font-size:15px;margin:-6px 0 0}
+.price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.price .brl{font-size:34px;font-weight:700;letter-spacing:-.02em}
+.price .usd{color:var(--muted);font-size:16px}
+.price-note{font-size:14px;color:var(--muted);margin-top:-8px}
+
+.pc{display:grid;grid-template-columns:1fr;gap:12px}
+.pc > div{border-radius:16px;padding:14px 16px}
+.pros{background:var(--good-bg)} .cons{background:var(--bad-bg)}
+.pc h4{margin:0 0 8px;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+.pros h4{color:var(--good)} .cons h4{color:var(--bad)}
+.pc ul{margin:0;padding-left:20px;font-size:15.5px}
+.pc li{margin:5px 0}
+
+.btns{display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:6px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:56px;border-radius:16px;font-weight:600;font-size:17px;text-decoration:none;padding:12px 18px;text-align:center;transition:transform .15s ease,filter .15s ease}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.ghost{background:var(--accent-bg);color:var(--accent)}
+.btn:hover{filter:brightness(1.08)} .btn:active{transform:scale(.98)}
+
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+.table-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow-x:auto;box-shadow:var(--shadow)}
+th,td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;background:var(--bg2)}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--muted);white-space:nowrap}
+.y{color:var(--good);font-weight:600}.n{color:var(--bad);font-weight:600}.q{color:var(--warn);font-weight:600}
+@media (max-width:600px){th,td{padding:11px 12px;font-size:14.5px} td:first-child{white-space:normal}}
+
+.info{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:820px){.info{grid-template-columns:1fr}}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.tile h3{margin:0 0 6px;font-size:18px}
+.tile p{margin:0;color:var(--muted);font-size:15.5px}
+
+.verdict{background:linear-gradient(135deg,var(--accent-bg),transparent);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.verdict p{margin:8px 0}
+
+.sticker-zone{position:relative}
+.sticker{position:absolute;right:6px;top:-58px;width:118px;height:118px;border-radius:50%;object-fit:cover;border:5px solid #fff;box-shadow:0 8px 24px rgba(0,0,0,.3);transform:rotate(-6deg);pointer-events:auto;z-index:1}
+@media (max-width:600px){.sticker{width:92px;height:92px;top:-44px;right:2px}}
+
+footer{color:var(--muted);font-size:13.5px;padding:36px 0 56px;border-top:1px solid var(--line);margin-top:32px}
+footer p{margin:6px 0}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:50}
+.lb.open{display:flex}
+.lb img{max-width:92vw;max-height:84vh;object-fit:contain;border-radius:12px;background:#fff}
+.lb button{position:absolute;background:rgba(255,255,255,.14);color:#fff;border:0;border-radius:999px;width:56px;height:56px;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lb button:hover{background:rgba(255,255,255,.25)}
+.lb .close{top:max(16px,env(safe-area-inset-top));right:16px}
+.lb .prev{left:12px;top:50%;transform:translateY(-50%)}
+.lb .next{right:12px;top:50%;transform:translateY(-50%)}
+.lb .count{position:absolute;bottom:max(18px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);color:#fff;font-size:14px;background:rgba(255,255,255,.14);padding:6px 12px;border-radius:999px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero reveal">
+    <span class="eyebrow">iPhone · Бразилия</span>
+    <h1>Стекло-антишпион<br>с защитой с 4 сторон</h1>
+    <p class="lead">Два варианта с фильтром «360° / 4-way»: экран затемнён не только слева и справа, но и сверху и снизу. Цены — в бразильских реалах, рядом пересчёт в доллары.</p>
+  </header>
+
+  <section class="reveal d1">
+    <div class="note">
+      <b>Перед заказом проверь модель айфона.</b> У iPhone 16 Pro экран 6,3″, у 14 Pro / 15 / 15 Pro / 16 — 6,1″, стёкла между ними не взаимозаменяемы. У WiWU одна страница на несколько моделей — нужную выбираешь в поле «variação» перед кнопкой «Comprar». ZAGG по ссылкам ниже — именно для <b>iPhone 16 Pro</b>.
+    </div>
+  </section>
+
+  <section>
+    <div class="grid">
+
+      <!-- WiWU -->
+      <article class="card reveal d1" data-gallery="wiwu">
+        <div class="gallery">
+          <button class="main-img" type="button" aria-label="Увеличить фото WiWU">
+            <img src="img/wiwu-1.jpg" alt="Стекло WiWU 4-Way iPrivacy на iPhone: правая часть экрана затемнена" loading="lazy">
+          </button>
+          <span class="zoom-hint">Нажми, чтобы увеличить</span>
+        </div>
+        <div class="thumbs" role="list">
+          <button class="thumb" type="button" aria-current="true" data-src="img/wiwu-1.jpg" data-alt="WiWU 4-Way iPrivacy на iPhone"><img src="img/wiwu-1.jpg" alt="" loading="lazy"></button>
+          <button class="thumb" type="button" data-src="img/wiwu-2.jpg" data-alt="WiWU 4-Way iPrivacy: стекло рядом с iPhone"><img src="img/wiwu-2.jpg" alt="" loading="lazy"></button>
+        </div>
+        <div class="body">
+          <div>
+            <div class="badge-row"><span class="badge green">4 стороны (по описанию продавца)</span><span class="badge">Дешевле</span></div>
+            <h3>WiWU 4-Way iPrivacy</h3>
+            <p class="sub">Película 360 Privativa · официальный магазин WiWU Brasil</p>
+          </div>
+          <div class="price"><span class="brl">R$ 141,91</span><span class="usd">≈ $25,51</span></div>
+          <p class="price-note">Цена на сайте, карта Visa, «com juros». Бесплатная доставка — от R$ 299.</p>
+          <div class="pc">
+            <div class="pros"><h4>Плюсы</h4><ul>
+              <li>Продавец прямо пишет: «Filtro de Privacidade Ativo em 4 Lados» — сбоку, сверху и снизу видно тёмный экран.</li>
+              <li>Закалённое стекло 9H, усиленные края против сколов.</li>
+              <li>Дешевле ZAGG примерно на R$ 85 (≈ $15).</li>
+              <li>Бразильский магазин: отправка с трек-номером, nota fiscal, поддержка в WhatsApp.</li>
+              <li>В комплекте набор для чистки (спиртовая салфетка, сухая тряпочка, наклейка от пыли) и инструкция.</li>
+              <li>По описанию продавца не мешает Face ID и подходит к тонким и MagSafe-чехлам.</li>
+            </ul></div>
+            <div class="cons"><h4>Минусы</h4><ul>
+              <li>Гарантия только 90 дней от брака.</li>
+              <li>Нет рамки-аппликатора: клеить на глаз по инструкции, есть риск приклеить криво.</li>
+              <li>Отзывов на странице нет («Seja o primeiro a opinar»).</li>
+              <li>Угол, с которого экран темнеет, не указан — только маркетинговые формулировки.</li>
+              <li>Одна страница на 9 моделей iPhone: легко ошибиться с вариантом.</li>
+            </ul></div>
+          </div>
+          <div class="btns">
+            <a class="btn primary" href="https://www.wiwu.com.br/wiwu-/pelicula-privativa-360-iphone-14-pro-ip-15-ip16-9117" target="_blank" rel="noopener">Заказать на wiwu.com.br</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ZAGG -->
+      <article class="card reveal d2" data-gallery="zagg">
+        <div class="gallery">
+          <button class="main-img" type="button" aria-label="Увеличить фото ZAGG">
+            <img src="img/zagg-1.jpg" alt="Стекло ZAGG Glass Privacy 360 на iPhone: экран выглядит чёрным под углом" loading="lazy">
+          </button>
+          <span class="zoom-hint">Нажми, чтобы увеличить</span>
+        </div>
+        <div class="thumbs" role="list">
+          <button class="thumb" type="button" aria-current="true" data-src="img/zagg-1.jpg" data-alt="ZAGG Privacy 360 на iPhone"><img src="img/zagg-1.jpg" alt="" loading="lazy"></button>
+          <button class="thumb" type="button" data-src="img/zagg-2.jpg" data-alt="ZAGG Privacy 360 — для iPhone 16 Pro 6,3″"><img src="img/zagg-2.jpg" alt="" loading="lazy"></button>
+          <button class="thumb" type="button" data-src="img/zagg-3.jpg" data-alt="ZAGG: в 5 раз прочнее обычных защитных стёкол (по данным производителя)"><img src="img/zagg-3.jpg" alt="" loading="lazy"></button>
+          <button class="thumb" type="button" data-src="img/zagg-4.jpg" data-alt="ZAGG EZ Apply: рамка для ровной поклейки"><img src="img/zagg-4.jpg" alt="" loading="lazy"></button>
+          <button class="thumb" type="button" data-src="img/zagg-5.jpg" data-alt="ZAGG: до 30% переработанного стекла"><img src="img/zagg-5.jpg" alt="" loading="lazy"></button>
+        </div>
+        <div class="body">
+          <div>
+            <div class="badge-row"><span class="badge green">4 стороны (4-way)</span><span class="badge">Известный бренд</span></div>
+            <h3>ZAGG InvisibleShield Privacy 360</h3>
+            <p class="sub">Для iPhone 16 Pro (6,3″). На Amazon называется «Glass Privacy 360», на Magalu — «Glass Elite Privacy 360».</p>
+          </div>
+          <div class="price"><span class="brl">R$ 227,24</span><span class="usd">≈ $40,85</span></div>
+          <p class="price-note">Цена на Amazon.com.br (12.11.2026). На Magalu цену получить не удалось: сайт блокирует автоматический доступ, смотри по ссылке.</p>
+          <div class="pc">
+            <div class="pros"><h4>Плюсы</h4><ul>
+              <li>Фильтр 4-way: по описанию производителя экран выглядит чёрным для всех, кто смотрит сверху, снизу или сбоку, в вертикальном и горизонтальном положении.</li>
+              <li>По данным ZAGG — в 5 раз прочнее обычных защитных стёкол, усиленные края против сколов и трещин.</li>
+              <li>Рамка EZ Apply в комплекте: стекло встаёт ровно с первого раза.</li>
+              <li>Сделано под конкретную модель (16 Pro 6,3″), а не «одно на все».</li>
+              <li>Покрытие против отпечатков и царапин.</li>
+              <li>Производитель заявляет ограниченную пожизненную гарантию с заменой стекла.</li>
+            </ul></div>
+            <div class="cons"><h4>Минусы</h4><ul>
+              <li>Дороже WiWU примерно в 1,6 раза.</li>
+              <li>Действует ли пожизненная гарантия ZAGG в Бразилии, я не проверила. Скорее всего придётся обращаться к продавцу.</li>
+              <li>Цена на Amazon.com.br меняется. Для 16 Pro Max вариант стоит R$ 228,50 (≈ $41,07).</li>
+              <li>Цену на Magalu не удалось получить, сравни сама перед заказом.</li>
+            </ul></div>
+          </div>
+          <div class="btns">
+            <a class="btn primary" href="https://www.amazon.com.br/dp/B0FH5N7NFC" target="_blank" rel="noopener">Заказать на Amazon.com.br</a>
+            <a class="btn ghost" href="https://www.magazineluiza.com.br/protetor-de-tela-zagg-glass-elite-privacy-360-para-iphone-16-pro/p/hfehea75ej/cf/asps/" target="_blank" rel="noopener">Посмотреть на Magalu</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="reveal">
+    <h2>Сравнение</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Параметр</th><th>WiWU 4-Way iPrivacy</th><th>ZAGG Privacy 360</th></tr></thead>
+        <tbody>
+          <tr><td>Защита с 4 сторон</td><td class="y">Да (по описанию продавца)</td><td class="y">Да (4-way)</td></tr>
+          <tr><td>Цена</td><td><b>R$ 141,91</b> ≈ $25,51</td><td><b>R$ 227,24</b> ≈ $40,85</td></tr>
+          <tr><td>Прочность</td><td>Закалённое стекло 9H</td><td>В 5 раз прочнее обычных стёкол (данные ZAGG)</td></tr>
+          <tr><td>Рамка для поклейки</td><td class="n">Нет, только инструкция</td><td class="y">Есть (EZ Apply)</td></tr>
+          <tr><td>Гарантия</td><td>90 дней</td><td class="q">Ограниченная пожизненная (условия в Бразилии не проверены)</td></tr>
+          <tr><td>Модели</td><td>iPhone 14 / 15 / 16, включая Pro и Pro Max (выбор в варианте)</td><td>Только iPhone 16 Pro (по этой ссылке)</td></tr>
+          <tr><td>Где купить</td><td>wiwu.com.br</td><td>Amazon.com.br, Magalu</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sticker-zone">
+    <img class="sticker" src="img/cat-peeking.jpg" alt="Подглядывающий котик" width="118" height="118">
+    <h2 class="reveal">Что важно знать про любой антишпион</h2>
+    <div class="info">
+      <div class="tile reveal d1"><h3>Ищи «360», «4 lados», «4-way»</h3><p>Многие плёнки «privativa / anti-espião» затемняют экран только слева и справа (2-way). Если в названии нет 360 / 4 lados / 4-way, сверху и снизу экран будет виден.</p></div>
+      <div class="tile reveal d2"><h3>Экран станет темнее</h3><p>Фильтр из микрожалюзи срезает часть света и для тебя тоже. Яркость обычно приходится поднимать, а от этого быстрее садится батарея.</p></div>
+      <div class="tile reveal d3"><h3>Показать экран соседу не выйдет</h3><p>Видео, фото и экран в целом хорошо видно только при взгляде прямо. При лёгком наклоне телефона картинка тоже темнеет.</p></div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="verdict">
+      <h2 style="margin-bottom:6px">Что выбрать</h2>
+      <p><b>ZAGG</b> — если хочешь проверенный бренд, ровную поклейку с рамкой и долгую гарантию. Фильтр 4-way прямо заявлен производителем.</p>
+      <p><b>WiWU</b> — если важна цена: защита с 4 сторон тоже заявлена, но гарантия 90 дней, рамки нет, а отзывов пока нет.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Цены: wiwu.com.br и Amazon.com.br, проверены 12.11.2026. Цены могут меняться.</p>
+    <p>Курс: 1 USD = 5,5632 BRL (AwesomeAPI, котировка USD-BRL от 11.11.2026).</p>
+    <p>Фото товаров: wiwu.com.br, Amazon. Котик: «Cat peeking out from couch», Kevin Dooley, CC BY 2.0, Wikimedia Commons.</p>
+  </footer>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Просмотр фото">
+  <button class="close" type="button" aria-label="Закрыть">×</button>
+  <button class="prev" type="button" aria-label="Предыдущее фото">‹</button>
+  <img alt="">
+  <button class="next" type="button" aria-label="Следующее фото">›</button>
+  <span class="count"></span>
+</div>
+
+<script>
+(function(){
+  var lb=document.getElementById('lb'), lbImg=lb.querySelector('img'), cnt=lb.querySelector('.count');
+  var list=[], idx=0;
+  function show(i){ idx=(i+list.length)%list.length; lbImg.src=list[idx].src; lbImg.alt=list[idx].alt; cnt.textContent=(idx+1)+' / '+list.length; }
+  function open(items,i){ list=items; show(i); lb.classList.add('open'); document.body.style.overflow='hidden'; lb.querySelector('.close').focus(); }
+  function close(){ lb.classList.remove('open'); document.body.style.overflow=''; }
+  document.querySelectorAll('.card[data-gallery]').forEach(function(card){
+    var thumbs=[].slice.call(card.querySelectorAll('.thumb'));
+    var main=card.querySelector('.main-img img');
+    var items=thumbs.map(function(t){return {src:t.dataset.src, alt:t.dataset.alt};});
+    var cur=0;
+    thumbs.forEach(function(t,i){
+      t.addEventListener('click',function(){
+        cur=i; main.src=t.dataset.src; main.alt=t.dataset.alt;
+        thumbs.forEach(function(x){x.removeAttribute('aria-current');}); t.setAttribute('aria-current','true');
+      });
+    });
+    card.querySelector('.main-img').addEventListener('click',function(){ open(items,cur); });
+  });
+  lb.querySelector('.close').addEventListener('click',close);
+  lb.querySelector('.prev').addEventListener('click',function(e){e.stopPropagation();show(idx-1);});
+  lb.querySelector('.next').addEventListener('click',function(e){e.stopPropagation();show(idx+1);});
+  lb.addEventListener('click',function(e){ if(e.target===lb) close(); });
+  document.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') close(); else if(e.key==='ArrowLeft') show(idx-1); else if(e.key==='ArrowRight') show(idx+1);
+  });
+  document.querySelectorAll('img').forEach(function(im){ im.addEventListener('error',function(){ im.style.visibility='hidden'; }); });
+})();
+</script>
+
+<script type="module">
+(async () => {
+  try {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const { animate } = await import("https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm");
+    const springy = { type: "spring", stiffness: 400, damping: 22 };
+    document.querySelectorAll('.btn, .thumb').forEach(el => {
+      el.addEventListener('pointerenter', () => animate(el, { scale: 1.03 }, springy));
+      el.addEventListener('pointerleave', () => animate(el, { scale: 1 }, springy));
+      el.addEventListener('pointerdown', () => animate(el, { scale: 0.96 }, springy));
+      el.addEventListener('pointerup', () => animate(el, { scale: 1.03 }, springy));
+    });
+    const cat = document.querySelector('.sticker');
+    if (cat) {
+      cat.addEventListener('pointerenter', () => animate(cat, { rotate: [-6, 6, -4, 2, -6] }, { duration: 0.7 }));
+      cat.addEventListener('pointerdown', () => animate(cat, { rotate: [-6, 6, -4, 2, -6] }, { duration: 0.7 }));
+    }
+  } catch (e) { /* анимации необязательны */ }
+})();
+</script>
+</body>
+</html>
